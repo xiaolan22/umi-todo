@@ -1,0 +1,12 @@
+language: node_js #前端工程是JavaScript，编译环境是node_js
+node_js:
+  - '8' #指定node版本
+install: yarn install
+branches:
+  only:
+    - master #指定只有检测到master分支有变动时才执行任务
+script:
+  - yarn build
+  - docker build -t maybush/umi_todo .
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+  - docker push maybush/umi_todo
